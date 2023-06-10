@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/login', [LoginController::class, 'index'])->name('login.page');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+});

@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
-    //
+    protected $jwt;
+
+    public function __construct(JWTAuth $jwt)
+    {
+        $this->jwt = $jwt;
+    }
 
     public function index()
     {
@@ -29,12 +35,9 @@ class LoginController extends Controller
 
         $data = json_decode($response->body(), true);
 
-        if ($data['status'] == 200) {
-            $request->session()->put('token', $data['authorization']['token']);
-            $request->session()->put('user', $data['user']);
-            return view('landing');
+        if ($data['status'] == 200 && $data['authorization']['token']) {
         } else {
-            return redirect()->route('login.page')->with('error', 'Email or password is incorrect');
+            return redirect()->route('login.page')->with('error', 'Email or Password is wrong');
         }
     }
 }
