@@ -36,6 +36,9 @@ class LoginController extends Controller
         $data = json_decode($response->body(), true);
 
         if ($data['status'] == 200 && $data['authorization']['token']) {
+            $request->session()->put('token', $data['authorization']['token']);
+            dd($request->session()->get('token'));
+            return redirect()->route('dashboard');
         } else {
             return redirect()->route('login.page')->with('error', 'Email or Password is wrong');
         }
