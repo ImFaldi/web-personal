@@ -10,13 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    //
-
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
-
     public function login(Request $request)
     {
         $request->validate([
@@ -79,6 +72,14 @@ class AuthController extends Controller
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
             ]
+        ]);
+    }
+
+    public function me()
+    {
+        
+        return response()->json([
+            'user' => Auth::user(),
         ]);
     }
 }

@@ -9,16 +9,15 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
-    protected $jwt;
-
-    public function __construct(JWTAuth $jwt)
-    {
-        $this->jwt = $jwt;
-    }
 
     public function index()
     {
-        return view('auth.login');
+        $token = session()->get('token');
+        if (!$token) {
+            return view('auth.login');
+        } else {
+            return redirect()->route('dashboard');
+        }
     }
 
     public function login(Request $request)
@@ -37,7 +36,8 @@ class LoginController extends Controller
 
         if ($data['status'] == 200 && $data['authorization']['token']) {
             $request->session()->put('token', $data['authorization']['token']);
-            dd($request->session()->get('token'));
+
+            // dd($request->session()->get('token'));
             return redirect()->route('dashboard');
         } else {
             return redirect()->route('login.page')->with('error', 'Email or Password is wrong');

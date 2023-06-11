@@ -18,6 +18,9 @@ use App\Http\Controllers\DashboardController;
 Route::get('/login', [LoginController::class, 'index'])->name('login.page');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::middleware('jwt.web')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/getme', [DashboardController::class, 'getme'])->name('getme');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 });
