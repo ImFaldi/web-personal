@@ -52,7 +52,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'User created successfully',
-            'user' => $user
+            'user' => $user,
+            'status' => 200,
         ]);
     }
 
@@ -77,7 +78,7 @@ class AuthController extends Controller
 
     public function me()
     {
-        
+
         return response()->json([
             'user' => Auth::user(),
         ]);

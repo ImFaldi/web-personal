@@ -21,7 +21,6 @@ class WebAuthenticate
             return redirect()->route('login.page');
         }
 
-        // cek token is valid
         $response = Http::withToken($token)->get('http://localhost:3000/api/me');
         if ($response->status() == 401) {
             $request->session()->flush();
