@@ -42,4 +42,16 @@ class LoginController extends Controller
             return redirect()->route('login.page')->with('error', 'Email or Password is wrong');
         }
     }
+
+    public function getMe(Request $request)
+    {
+        $token = $request->session()->get('token');
+        $response = Http::withToken($token)->get('http://localhost:3000/api/me');
+        $data = json_decode($response->body(), true);
+        if ($data['status'] == 200) {
+            dd($data);
+        } else {
+            return redirect()->route('login.page')->with('error', 'Email or Password is wrong');
+        }
+    }
 }

@@ -81,6 +81,7 @@ class AuthController extends Controller
 
         return response()->json([
             'user' => Auth::user(),
+            'status' => 200
         ]);
     }
 }

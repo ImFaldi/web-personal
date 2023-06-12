@@ -26,14 +26,9 @@ class WebAuthenticate
             $request->session()->flush();
             return redirect()->route('login.page');
         }elseif ($response->status() == 200) {
-            $user = json_decode($response->body(), true);
-            $request->session()->put('user', $user);
-        } elseif ($response->status() != 200) {
-            return redirect()->route('dashboard');
-        }else {
-            return redirect()->route('login.page');
+            $request->session()->put('user', $response->json());
+            $request->session()->put('token', $token);
         }
-        
         return $next($request);
     }
 }

@@ -17,7 +17,6 @@ class ApiAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        
         if (!Auth::check()) {
             return response()->json([
                 'message' => 'Unauthorized',

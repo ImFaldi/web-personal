@@ -6,6 +6,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Data\AboutMeController;
+use App\Http\Controllers\Data\PortofolioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,11 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::middleware('jwt.web')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/table', [DashboardController::class, 'table'])->name('table');
-    Route::get('/getme', [DashboardController::class, 'getme'])->name('getme');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+    Route::get('/getme', [LoginController::class, 'getMe'])->name('getme');
+    Route::get('/aboutme', [AboutMeController::class, 'GetAllAboutMe'])->name('aboutme');
+});
 
+Route::middleware('jwt.web')->group(function () {
+    Route::post('/portofolio', [PortofolioController::class, 'CreatePortofolio'])->name('portofolio');
 });
